@@ -164,3 +164,5 @@ CACHES = {
         "LOCATION": os.path.join(BASE_DIR, "cache"),
     }
 }
+
+AUTH_USER_MODEL = 'user.CustomUser'
