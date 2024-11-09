@@ -4,6 +4,15 @@ from . import custom_signals
 from . import managers
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
@@ -14,14 +23,7 @@ class Category(models.Model):
         "self", on_delete=models.CASCADE, related_name="child", blank=True, null=True
     )
 
-    def __str__(self):
-        return f"{self.name}"
-
-
-class Tag(models.Model):
-    name = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    objects=managers.CategoryManager()
 
     def __str__(self):
         return f"{self.name}"
@@ -41,8 +43,7 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, related_name="products")
     tags = models.ManyToManyField(Tag, related_name="products")
 
-
-    objects=managers.ProductManager()
+    objects = managers.ProductManager()
 
     def sell_product(self):
         custom_signals.product_sold_signal.send(sender=self.__class__, instance=self)

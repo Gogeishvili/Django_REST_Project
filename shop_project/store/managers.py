@@ -29,3 +29,34 @@ class ProductManager(models.Manager):
             products_data.append(product)
 
         return products_data
+
+
+class CategoryManager(models.Manager):
+
+    def get_category_JSON_data(self):
+        categories = self.all().prefetch_related("products")
+        categories_data = []
+        for cat in categories:
+            parent_data = {"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None
+            category = {
+                "id": cat.id,
+                "name": cat.name,
+                "parent": parent_data,
+                "products": [
+                    {
+                        "id": pro.id,
+                        "name": pro.name,
+                        "title": pro.title,
+                        "price": str(pro.price),
+                        "quantity": pro.quantity,
+                        "is_active": pro.is_active,
+                        "slug": pro.slug,
+                        "created_at": pro.created_at.isoformat(),
+                        "updated_at": pro.updated_at.isoformat(),
+                        "image_url": pro.image.url if pro.image else None,
+                    }
+                    for pro in cat.products.all()
+                ],
+            }
+            categories_data.append(category)
+        return categories_data
