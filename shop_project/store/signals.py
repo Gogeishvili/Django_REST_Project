@@ -1,9 +1,9 @@
 from django.db.models import signals
 from django.dispatch import receiver
 from . import models
+from . import custom_signals
 
-
-@receiver(signal=models.Product.sold_signal)
+@receiver(signal=custom_signals.product_sold_signal)
 def on_product_sold(sender, **kwargs):
     product = kwargs.get('instance')
     if product:

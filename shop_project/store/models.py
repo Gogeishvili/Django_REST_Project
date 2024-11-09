@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.dispatch import Signal
-
+from . import custom_signals
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -41,12 +40,11 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, related_name="products")
     tags = models.ManyToManyField(Tag, related_name="products")
 
-    sold_signal = Signal()
 
     def sell_product(self):
         self.save()
         print("signali gaigzavna")
-        self.sold_signal.send(sender=self.__class__,instance=self)
+        custom_signals.product_sold_signal.send(sender=self.__class__,instance=self)
 
 
     def sum_price(self):
