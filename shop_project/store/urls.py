@@ -4,5 +4,5 @@ from . import views
 app_name = "store"
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("products/JSON", views.products_JSON_view, name="products_JSON_view"),
 ]

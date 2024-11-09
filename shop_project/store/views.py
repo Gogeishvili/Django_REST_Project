@@ -1,14 +1,9 @@
 from django.http import JsonResponse
-from store import models
+from . import models
 from django.conf import settings
+from django.forms.models import model_to_dict
 
-# Create your views here.
-def index(request):
-    products = list(models.Product.objects.values())
 
-    # Add the full image URL by combining the media URL with the relative image path
-    for product in products:
-        if product.get('image'):
-            product['image_url'] = settings.MEDIA_URL + product['image']
-
+def products_JSON_view(request):
+    products = models.Product.objects.get_prodacts_JSON_data()
     return JsonResponse({"products": products})

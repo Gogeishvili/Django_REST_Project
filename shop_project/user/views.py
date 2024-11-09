@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
+from . import models
 
-# Create your views here.
+
 def index(request):
-    return HttpResponse("User Index")
+    users_list = list(models.CustomUser.objects.values())
+    return JsonResponse({"users": users_list})

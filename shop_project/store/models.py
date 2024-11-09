@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from . import custom_signals
+from . import managers
 
 
 class Category(models.Model):
@@ -39,6 +40,9 @@ class Product(models.Model):
 
     categories = models.ManyToManyField(Category, related_name="products")
     tags = models.ManyToManyField(Tag, related_name="products")
+
+
+    objects=managers.ProductManager()
 
     def sell_product(self):
         custom_signals.product_sold_signal.send(sender=self.__class__, instance=self)

@@ -9,10 +9,16 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ["name"] 
     prepopulated_fields = {"slug": ("name",)}
 
+    actions=['set_quantity_zero']
 
     @admin.display(description="Sum Price")
     def sum_price(self, obj):
         return obj.sum_price()
+    
+    
+    @admin.action(description="set zero count")
+    def set_quantity_zero(self,request,queryset):
+        queryset.update(quantity=0)
     
 
 @admin.register(models.Category)
