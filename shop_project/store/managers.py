@@ -36,7 +36,7 @@ class CategoryManager(models.Manager):
 
     def get_category_JSON_data(self):
 
-        categories = self.all().prefetch_related("products")
+        categories = self.all().prefetch_related("products").select_related('child')
         categories_data = []
         for cat in categories:
             parent_data = (
@@ -46,6 +46,7 @@ class CategoryManager(models.Manager):
                 "id": cat.id,
                 "name": cat.name,
                 "parent": parent_data,
+                "child":cat.child.name,
                 "products": [
                     {
                         "id": pro.id,
@@ -72,6 +73,11 @@ class TagManager(models.Manager):
         
         tags=self.all().prefetch_related("products")
         tags_data=[]
+
+        for t in tags:
+            tag={
+
+            }
 
         return tags_data
         
