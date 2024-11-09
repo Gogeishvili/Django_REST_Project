@@ -36,17 +36,17 @@ class CategoryManager(models.Manager):
 
     def get_category_JSON_data(self):
 
-        categories = self.all().prefetch_related("products").select_related('child')
+        categories = self.all().prefetch_related("products").select_related('parent')
         categories_data = []
         for cat in categories:
-            parent_data = (
-                {"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None
-            )
+            parent_data = ({"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None)
+            child_data = [{"id": child.id, "name": child.name} for child in cat.child.all()]
+    
             category = {
                 "id": cat.id,
                 "name": cat.name,
                 "parent": parent_data,
-                "child":cat.child.name,
+                "children": child_data,
                 "products": [
                     {
                         "id": pro.id,
