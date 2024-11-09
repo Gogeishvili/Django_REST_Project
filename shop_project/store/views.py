@@ -9,6 +9,11 @@ def products_JSON_view(request):
     return JsonResponse({"products": products})
 
 
-def category_JSON_view(request):
-    categories=models.Category.objects.get_category_JSON_data()  
-    return JsonResponse({"categopries":categories})
+def categories_JSON_view(request):
+    categories = models.Category.objects.get_category_JSON_data()
+    return JsonResponse({"categopries": categories})
+
+
+def tags_JSON_view(request):
+    tags = models.Tag.objects.get_tag_JSON_data()
+    return JsonResponse({"tags": tags})

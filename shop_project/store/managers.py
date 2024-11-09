@@ -6,6 +6,7 @@ from django.conf import settings
 class ProductManager(models.Manager):
 
     def get_prodacts_JSON_data(self):
+
         products = self.all().prefetch_related("categories", "tags")
         products_data = []
         for pro in products:
@@ -34,10 +35,13 @@ class ProductManager(models.Manager):
 class CategoryManager(models.Manager):
 
     def get_category_JSON_data(self):
+
         categories = self.all().prefetch_related("products")
         categories_data = []
         for cat in categories:
-            parent_data = {"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None
+            parent_data = (
+                {"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None
+            )
             category = {
                 "id": cat.id,
                 "name": cat.name,
@@ -60,3 +64,14 @@ class CategoryManager(models.Manager):
             }
             categories_data.append(category)
         return categories_data
+
+
+class TagManager(models.Manager):
+
+    def get_tag_JSON_data(self):
+        
+        tags=self.all().prefetch_related("products")
+        tags_data=[]
+
+        return tags_data
+        
