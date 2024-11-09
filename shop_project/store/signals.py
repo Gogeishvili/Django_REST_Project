@@ -12,6 +12,5 @@ def on_product_sold(sender, **kwargs):
 
 @receiver(signals.pre_save, sender=models.Category)
 def on_categoy_save(sender, **kwargs):
-    print("Category saved")
-    category = kwargs["instance"]
+    category = kwargs.get('instance')
     print(category)

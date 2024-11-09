@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from . import custom_signals
 
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
@@ -25,7 +26,6 @@ class Tag(models.Model):
         return f"{self.name}"
 
 
-
 class Product(models.Model):
     name = models.CharField(max_length=30, verbose_name=_("Name"))
     title = models.CharField(max_length=200, blank=True)
@@ -40,13 +40,8 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, related_name="products")
     tags = models.ManyToManyField(Tag, related_name="products")
 
-
     def sell_product(self):
-        self.save()
-        print("signali gaigzavna")
-        custom_signals.product_sold_signal.send(sender=self.__class__,
-                                                instance=self)
-
+        custom_signals.product_sold_signal.send(sender=self.__class__, instance=self)
 
     def sum_price(self):
         return self.price * self.quantity
