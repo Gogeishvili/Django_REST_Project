@@ -44,7 +44,8 @@ class Product(models.Model):
     def sell_product(self):
         self.save()
         print("signali gaigzavna")
-        custom_signals.product_sold_signal.send(sender=self.__class__,instance=self)
+        custom_signals.product_sold_signal.send(sender=self.__class__,
+                                                instance=self)
 
 
     def sum_price(self):
