@@ -26,9 +26,9 @@ from django.conf.urls.static import static
 urlpatterns = (
     i18n_patterns(
         path("admin/", admin.site.urls),
-        path("store/", include("store.urls", namespace="store")),
         path("order/", include("order.urls", namespace="order")),
         path("user/", include("user.urls", namespace="user")),
+        path("store/", include("store.urls", namespace="store")),
         prefix_default_language=False,
     )
     + debug_toolbar_urls()
