@@ -22,9 +22,11 @@ def tags_JSON_view(request):
     return JsonResponse({"tags": tags})
 
 
-@api_view(["GET", "POST"])
+@api_view(["GET"])
 @permission_classes([permissions.IsAuthenticated])
 def products_API_view(request):
     product_data = models.Product.objects.all().prefetch_related('categories', 'tags')
     serializer = serializers.ProductSerializer(product_data, many=True, context={'request': request})
     return Response(serializer.data)
+
+

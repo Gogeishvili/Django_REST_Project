@@ -9,7 +9,7 @@ class Tag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects=managers.TagManager()
+    objects = managers.TagManager()
 
     def __str__(self):
         return f"{self.name}"
@@ -25,7 +25,7 @@ class Category(models.Model):
         "self", on_delete=models.CASCADE, related_name="child", blank=True, null=True
     )
 
-    objects=managers.CategoryManager()
+    objects = managers.CategoryManager()
 
     def __str__(self):
         return f"{self.name}"
