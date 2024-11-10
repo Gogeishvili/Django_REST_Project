@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from . import models
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import NotFound
+from rest_framework import status
 
 
 def products_JSON_view(request):
@@ -19,8 +19,8 @@ def tags_JSON_view(request):
     tags = models.Tag.objects.get_tags_data_list()
     return JsonResponse({"tags": tags})
 
-@api_view()
+@api_view(['GET','POST'])
 def products(request):
-    products=models.Product.objects.values()
-    products = models.Product.objects.get_prodacts_data_list()
-    return Response(list(products))
+    print(request.method)
+    products_data_list = models.Product.objects.get_prodacts_data_list()
+    return Response(products_data_list)
