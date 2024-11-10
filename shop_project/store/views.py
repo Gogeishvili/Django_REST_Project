@@ -47,13 +47,6 @@ class ProductsViewAPI(views.APIView):
         )
         return Response(serializer.data)
 
-    def post(self, request):
-        serializer = serializers.ProductSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
-
 
 class ProductDetailViewAPI(generics.RetrieveAPIView):
     queryset = models.Product.objects.all().prefetch_related("categories", "tags")
@@ -66,3 +59,26 @@ class ProductListViewAPI(generics.ListAPIView):
     serializer_class = serializers.ProductSerializer
     permission_classes = [IsAuthenticated]
     # pagination_class=PageNumberPagination
+
+
+class CreateProductView(generics.CreateAPIView):
+    serializer_class = serializers.ProductCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ListCreateProductView(generics.ListCreateAPIView):
+    queryset = models.Product.objects.all().prefetch_related("categories", "tags")
+    serializer_class = serializers.ProductCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class UpdateProductView(generics.UpdateAPIView):
+    queryset = models.Product.objects.all().prefetch_related("categories", "tags")
+    serializer_class = serializers.ProductCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class RetrieveUpdateDestroyProductView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Product.objects.all().prefetch_related("categories", "tags")
+    serializer_class = serializers.ProductCreateSerializer
+    permission_classes = [IsAuthenticated]
