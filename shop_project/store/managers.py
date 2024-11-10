@@ -36,12 +36,17 @@ class CategoryManager(models.Manager):
 
     def get_category_JSON_data(self):
 
-        categories = self.all().prefetch_related("products").select_related('parent')
+        categories = self.all().prefetch_related("products").select_related("parent")
         categories_data = []
+
         for cat in categories:
-            parent_data = ({"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None)
-            child_data = [{"id": child.id, "name": child.name} for child in cat.child.all()]
-    
+            parent_data = (
+                {"id": cat.parent.id, "name": cat.parent.name} if cat.parent else None
+            )
+            child_data = [
+                {"id": child.id, "name": child.name} for child in cat.child.all()
+            ]
+
             category = {
                 "id": cat.id,
                 "name": cat.name,
@@ -70,14 +75,30 @@ class CategoryManager(models.Manager):
 class TagManager(models.Manager):
 
     def get_tag_JSON_data(self):
-        
-        tags=self.all().prefetch_related("products")
-        tags_data=[]
+
+        tags = self.all().prefetch_related("products")
+        tags_data = []
 
         for t in tags:
-            tag={
-
+            tag = {
+                "id": t.id,
+                "name": t.name,
+                "products": [
+                    {
+                        "id": pro.id,
+                        "name": pro.name,
+                        "title": pro.title,
+                        "price": str(pro.price),
+                        "quantity": pro.quantity,
+                        "is_active": pro.is_active,
+                        "slug": pro.slug,
+                        "created_at": pro.created_at.isoformat(),
+                        "updated_at": pro.updated_at.isoformat(),
+                        "image_url": pro.image.url if pro.image else None,
+                    }
+                    for pro in t.products.all()
+                ],
             }
+            tags_data.append(tag)
 
         return tags_data
-        
