@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # imported apps
     "debug_toolbar",
+    "rest_framework"
     # my apps
     "store",
     "order",
@@ -166,3 +167,11 @@ CACHES = {
 }
 
 AUTH_USER_MODEL = 'user.CustomUser'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+}

@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from . import models
+from rest_framework import viewsets
 
 
 def products_JSON_view(request):
@@ -15,5 +16,4 @@ def categories_JSON_view(request):
 def tags_JSON_view(request):
     tags = models.Tag.objects.get_tag_JSON_data()
     return JsonResponse({"tags": tags})
-
 
