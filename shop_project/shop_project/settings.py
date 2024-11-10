@@ -170,8 +170,10 @@ AUTH_USER_MODEL = 'user.CustomUser'
 
 #REST
 REST_FRAMEWORK = {
+    # 'PAGE_SIZE':2,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
 }
+

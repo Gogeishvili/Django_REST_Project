@@ -3,6 +3,7 @@ from . import models
 
 
 class ProductSerializer(serializers.Serializer):
+    id=serializers.IntegerField()
     name = serializers.CharField()
     price = serializers.DecimalField(max_digits=10, decimal_places=2)
     quantity = serializers.IntegerField()
