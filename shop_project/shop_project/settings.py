@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # imported apps
     "debug_toolbar",
-    "rest_framework"
+    "rest_framework",
     # my apps
     "store",
     "order",

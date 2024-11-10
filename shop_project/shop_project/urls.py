@@ -29,6 +29,7 @@ urlpatterns = (
         path("order/", include("order.urls", namespace="order")),
         path("user/", include("user.urls", namespace="user")),
         path("store/", include("store.urls", namespace="store")),
+        path('api-auth/', include('rest_framework.urls')),
         prefix_default_language=False,
     )
     + debug_toolbar_urls()

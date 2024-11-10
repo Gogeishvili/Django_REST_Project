@@ -5,7 +5,7 @@ from django.conf import settings
 
 class ProductManager(models.Manager):
 
-    def get_prodacts_JSON_data(self):
+    def get_prodacts_data_list(self):
 
         products = self.all().prefetch_related("categories", "tags")
         products_data = []
@@ -34,7 +34,7 @@ class ProductManager(models.Manager):
 
 class CategoryManager(models.Manager):
 
-    def get_category_JSON_data(self):
+    def get_categories_data_list(self):
 
         categories = self.all().prefetch_related("products").select_related("parent")
         categories_data = []
@@ -74,7 +74,7 @@ class CategoryManager(models.Manager):
 
 class TagManager(models.Manager):
 
-    def get_tag_JSON_data(self):
+    def get_tags_data_list(self):
 
         tags = self.all().prefetch_related("products")
         tags_data = []
