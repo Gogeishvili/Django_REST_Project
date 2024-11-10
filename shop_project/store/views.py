@@ -1,7 +1,5 @@
 from django.http import JsonResponse
 from . import models
-from django.conf import settings
-from django.forms.models import model_to_dict
 
 
 def products_JSON_view(request):
@@ -17,3 +15,5 @@ def categories_JSON_view(request):
 def tags_JSON_view(request):
     tags = models.Tag.objects.get_tag_JSON_data()
     return JsonResponse({"tags": tags})
+
+
