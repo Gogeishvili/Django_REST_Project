@@ -168,7 +168,7 @@ CACHES = {
 
 AUTH_USER_MODEL = 'user.CustomUser'
 
-
+#REST
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
