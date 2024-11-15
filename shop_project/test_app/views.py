@@ -46,6 +46,7 @@ class ProductsViewAPI(views.APIView):
             product_data, many=True, context={"request": request}
         )
         return Response(serializer.data)
+    
 
 
 class ProductDetailViewAPI(generics.RetrieveAPIView):
@@ -53,12 +54,15 @@ class ProductDetailViewAPI(generics.RetrieveAPIView):
     serializer_class = serializers.ProductSerializer
     permission_classes = [IsAuthenticated]
 
+    
+
 
 class ProductListViewAPI(generics.ListAPIView):
     queryset = models.Product.objects.all().prefetch_related("categories", "tags")
     serializer_class = serializers.ProductSerializer
     permission_classes = [IsAuthenticated]
     # pagination_class=PageNumberPagination
+   
 
 
 class CreateProductView(generics.CreateAPIView):
@@ -82,3 +86,4 @@ class RetrieveUpdateDestroyProductView(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all().prefetch_related("categories", "tags")
     serializer_class = serializers.ProductCreateSerializer
     permission_classes = [IsAuthenticated]
+

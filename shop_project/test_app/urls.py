@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = "store"
+app_name = "test_app"
 
 urlpatterns = [
     path("products/JSON", views.products_JSON_view, name="products_JSON_view"),
@@ -15,8 +15,5 @@ urlpatterns = [
     path("ListCreateProductView/",views.ListCreateProductView.as_view(),name="ListCreateProductView"),
     path("UpdateProductView/<int:pk>",views.UpdateProductView.as_view(),name="UpdateProductView"),
     path("RetrieveUpdateDestroyProductView/<int:pk>",views.RetrieveUpdateDestroyProductView.as_view(),name="UpdateProductView"),
-
-
-
 
 ]

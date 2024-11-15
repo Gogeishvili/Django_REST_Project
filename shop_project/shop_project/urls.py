@@ -26,9 +26,8 @@ from django.conf.urls.static import static
 urlpatterns = (
     i18n_patterns(
         path("admin/", admin.site.urls),
-        path("order/", include("order.urls", namespace="order")),
+        path("test/",include("test_app.urls",namespace="test_app")),
         path("user/", include("user.urls", namespace="user")),
-        path("store/", include("store.urls", namespace="store")),
         path('api-auth/', include('rest_framework.urls')),
         prefix_default_language=False,
     )

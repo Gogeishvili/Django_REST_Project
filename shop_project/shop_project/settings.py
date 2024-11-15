@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "rest_framework",
     # my apps
-    "store",
-    "order",
+    "test_app",
     "user",
 ]
 
@@ -170,7 +169,6 @@ AUTH_USER_MODEL = 'user.CustomUser'
 
 #REST
 REST_FRAMEWORK = {
-    # 'PAGE_SIZE':2,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',

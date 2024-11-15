@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class StoreConfig(AppConfig):
+class TestAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'store'
+    name = 'test_app'
 
     def ready(self):
-        import store.signals
+        import test_app.signals
