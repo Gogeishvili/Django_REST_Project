@@ -22,6 +22,10 @@ class RestaurantCreateSerializer(serializers.ModelSerializer):
         validated_data["owner"] = self.context["request"].user
         return super().create(validated_data)
     
+    def update(self, instance, validated_data,*args, **kwargs):
+
+        return super().update(instance, validated_data)
+    
 
 
 class IngredinetSerializer(serializers.ModelSerializer):

@@ -3,12 +3,13 @@ from rest_framework.serializers import *
 from rest_framework.response import Response
 from . import serializers as s
 from . import models as m
+from . import parmissions as p
 
 
 class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = m.Restaurant.objects.all()
     serializer_class = s.RestaurantSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -28,9 +29,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         restaurant = self.get_object()
-        if restaurant.owner != request.user:
-            raise ValidationError("You are not the owner")
-
+        self.check_object_permissions(request, restaurant)
         self.perform_destroy(restaurant)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -44,59 +43,51 @@ class IngredientsViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
     def destroy(self, request, *args, **kwargs):
-        restaurant = self.get_object()
-        if restaurant.owner != request.user:
-            raise ValidationError("You are not the owner")
-
-        self.perform_destroy(restaurant)
+        ingedinet = self.get_object()
+        self.check_object_permissions(request, ingedinet)
+        self.perform_destroy(ingedinet)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class MenuViewSet(viewsets.ModelViewSet):
     queryset = m.Menu.objects.all()
     serializer_class = s.MenuSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def destroy(self, request, *args, **kwargs):
-        restaurant = self.get_object()
-        if restaurant.owner != request.user:
-            raise ValidationError("You are not the owner")
-
-        self.perform_destroy(restaurant)
+        menu = self.get_object()
+        self.check_object_permissions(request, menu)
+        self.perform_destroy(menu)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = m.Category.objects.all()
     serializer_class = s.CategorySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def destroy(self, request, *args, **kwargs):
-        restaurant = self.get_object()
-        if restaurant.owner != request.user:
-            raise ValidationError("You are not the owner")
-
-        self.perform_destroy(restaurant)
+        category = self.get_object()
+        self.check_object_permissions(request, category)
+        self.perform_destroy(category)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class DishViewSet(viewsets.ModelViewSet):
     queryset = m.Dish.objects.all()
     serializer_class = s.DishSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def destroy(self, request, *args, **kwargs):
-        restaurant = self.get_object()
-        if restaurant.owner != request.user:
-            raise ValidationError("You are not the owner")
-
-        self.perform_destroy(restaurant)
+        dish = self.get_object()
+        self.check_object_permissions(request, dish)
+        self.perform_destroy(dish)
         return Response(status=status.HTTP_204_NO_CONTENT)
