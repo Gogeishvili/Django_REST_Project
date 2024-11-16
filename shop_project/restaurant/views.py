@@ -34,6 +34,23 @@ class RestaurantViewSet(viewsets.ModelViewSet):
         self.perform_destroy(restaurant)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+class IngredientsViewSet(viewsets.ModelViewSet):
+    queryset = m.Ingredient.objects.all()
+    serializer_class = s.IngredinetSerializer
+    permission_classes = [permissions.IsAuthenticated]  
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    
+    def destroy(self, request, *args, **kwargs):
+        restaurant = self.get_object()
+        if restaurant.owner != request.user:
+            raise ValidationError("You are not the owner")
+        
+        self.perform_destroy(restaurant)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 # class MenuViewSet(viewsets.ModelViewSet):

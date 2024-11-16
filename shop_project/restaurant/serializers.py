@@ -21,3 +21,14 @@ class RestaurantCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data["owner"] = self.context["request"].user
         return super().create(validated_data)
+    
+
+
+class IngredinetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=m.Ingredient
+        fields = "__all__"
+    
+    def create(self, validated_data):
+        validated_data["owner"] = self.context["request"].user
+        return super().create(validated_data)
