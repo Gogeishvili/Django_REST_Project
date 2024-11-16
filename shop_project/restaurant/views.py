@@ -7,7 +7,7 @@ from . import parmissions as p
 
 
 class RestaurantViewSet(viewsets.ModelViewSet):
-    queryset = m.Restaurant.objects.all()
+    queryset = m.Restaurant.objects.all().select_related('owner')
     serializer_class = s.RestaurantSerializer
     permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
@@ -32,10 +32,11 @@ class RestaurantViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(request, restaurant)
         self.perform_destroy(restaurant)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
 
 
 class IngredientsViewSet(viewsets.ModelViewSet):
-    queryset = m.Ingredient.objects.all()
+    queryset = m.Ingredient.objects.all().prefetch_related('dishes')
     serializer_class = s.IngredinetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -50,7 +51,7 @@ class IngredientsViewSet(viewsets.ModelViewSet):
 
 
 class MenuViewSet(viewsets.ModelViewSet):
-    queryset = m.Menu.objects.all()
+    queryset = m.Menu.objects.all().select_related('restaurant','owner')
     serializer_class = s.MenuSerializer
     permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
@@ -65,7 +66,7 @@ class MenuViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = m.Category.objects.all()
+    queryset = m.Category.objects.all().select_related('owner','menu')
     serializer_class = s.CategorySerializer
     permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
@@ -79,7 +80,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class DishViewSet(viewsets.ModelViewSet):
-    queryset = m.Dish.objects.all()
+    queryset = m.Dish.objects.all().select_related('category','owner').prefetch_related('ingredients')
     serializer_class = s.DishSerializer
     permission_classes = [permissions.IsAuthenticated,p.IsOwnerOrReadOnly]
 
