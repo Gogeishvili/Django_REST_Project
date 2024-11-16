@@ -57,6 +57,6 @@ class ProductModelSerializer(serializers.ModelSerializer):
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
-        fields = "__all__"
+        exclude = ['categories', 'tags']
 
 

@@ -28,6 +28,7 @@ urlpatterns = (
         path("admin/", admin.site.urls),
         path("test/",include("test_app.urls",namespace="test_app")),
         path("user/", include("user.urls", namespace="user")),
+        path("restaurant/", include("restaurant.urls", namespace="restaurant")),
         path('api-auth/', include('rest_framework.urls')),
         prefix_default_language=False,
     )

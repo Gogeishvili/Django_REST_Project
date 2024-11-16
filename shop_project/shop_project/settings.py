@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # my apps
     "test_app",
     "user",
+    "restaurant"
 ]
 
 MIDDLEWARE = [
@@ -173,5 +174,8 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # )
 }
 
